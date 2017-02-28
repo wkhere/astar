@@ -17,7 +17,6 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 	openq := new(OpenQS)
 	openq.Init()
 	openq.Add(node0, f0)
-	path = nil
 
 	for openq.Len() > 0 {
 		x := openq.Pop()
