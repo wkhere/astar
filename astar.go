@@ -28,7 +28,7 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 		closedset[x] = struct{}{}
 
 		for _, y := range graph.Nbs(x) {
-			if _, ok := closedset[y]; ok {
+			if _, closed := closedset[y]; closed {
 				continue
 			}
 
