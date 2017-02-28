@@ -33,22 +33,22 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 				continue
 			}
 
-			est_g := g[x] + graph.Dist(x, y)
+			gEstimated := g[x] + graph.Dist(x, y)
 
-			y_queued, updating := openq.Item(y)
+			yQueued, updating := openq.Item(y)
 
 			if updating {
-				if est_g >= g[y] {
+				if gEstimated >= g[y] {
 					continue
 				}
 			}
 
 			parents[y] = x
-			g[y] = est_g
-			fy := graph.H(y, goal) + est_g
+			g[y] = gEstimated
+			fy := graph.H(y, goal) + gEstimated
 
 			if updating {
-				openq.Update(y_queued, fy)
+				openq.Update(yQueued, fy)
 			} else {
 				openq.Add(y, fy)
 			}
