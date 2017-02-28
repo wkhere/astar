@@ -35,10 +35,9 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 
 			est_g := g[x] + graph.Dist(x, y)
 
-			var updating bool
-			var y_queued *qitem
+			y_queued, updating := openq.Item(y)
 
-			if y_queued, updating = openq.Item(y); updating {
+			if updating {
 				if est_g >= g[y] {
 					continue
 				}
@@ -47,6 +46,7 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 			parents[y] = x
 			g[y] = est_g
 			fy := graph.H(y, goal) + est_g
+
 			if updating {
 				openq.Update(y_queued, fy)
 			} else {
