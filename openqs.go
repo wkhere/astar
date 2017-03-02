@@ -41,10 +41,9 @@ func (q *queue) Push(obj interface{}) {
 }
 
 func (q *queue) Pop() interface{} {
-	old := *q
-	n := len(old)
-	x := old[n-1]
-	*q = old[0 : n-1]
+	n := len(*q)
+	x := (*q)[n-1]
+	*q = (*q)[0 : n-1]
 	return x
 }
 
