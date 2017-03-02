@@ -1,9 +1,9 @@
 go:
-	go fmt
-	go vet
-	go build
-	go test -cover
-	go install
+	go fmt		./...
+	go tool vet -composites=false .
+	go build	./...
+	go test -cover	./...
+	go install		./...
 
 benchmark:
-	go test -bench=. -benchmem
+	go test -bench=. -benchmem .
