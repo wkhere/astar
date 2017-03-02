@@ -5,5 +5,9 @@ go:
 	go test -cover	./...
 	go install		./...
 
+cover:
+	go test -coverprofile=cov
+	go tool cover -html=cov
+
 benchmark:
 	go test -bench=. -benchmem .
