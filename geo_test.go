@@ -82,7 +82,7 @@ func init() {
 func distLookup(n1, n2 Node) (v Cost, ok bool) {
 	v, ok = distances[nodePair{n1, n2}]
 	if ok {
-		return v, ok
+		return
 	}
 	v, ok = distances[nodePair{n2, n1}]
 	return
