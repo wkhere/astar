@@ -20,7 +20,7 @@ func ExampleGeo() {
 	// []
 	// [Warszawa]
 	// [Wałcz]
-	// [Poznań]
+	// [Trzcianka Poznań]
 }
 
 func BenchmarkGeo(b *testing.B) {
@@ -51,18 +51,23 @@ func (g Geo) H(n1, n2 Node) Cost {
 }
 
 var coords = map[Node]geo.Pt{
-	"Wałcz":    geo.Pt{53.283853, 16.470173},
-	"Poznań":   geo.Pt{52.408031, 16.920613},
-	"Warszawa": geo.Pt{52.230069, 21.018513},
+	"Wałcz":     geo.Pt{53.283853, 16.470173},
+	"Trzcianka": geo.Pt{53.0427712, 16.3763841},
+	"Piła":      geo.Pt{53.1347933, 16.6195561},
+	"Poznań":    geo.Pt{52.408031, 16.920613},
+	"Warszawa":  geo.Pt{52.230069, 21.018513},
 }
 
 type nodePair struct{ n1, n2 Node }
 
 var distances = map[nodePair]Cost{
 	// these are arbitrary distances taken from real maps
-	nodePair{"Wałcz", "Poznań"}:    119,
-	nodePair{"Wałcz", "Warszawa"}:  421,
-	nodePair{"Poznań", "Warszawa"}: 310,
+	nodePair{"Wałcz", "Trzcianka"}:  31,
+	nodePair{"Trzcianka", "Poznań"}: 88,
+	nodePair{"Wałcz", "Piła"}:       28,
+	nodePair{"Piła", "Poznań"}:      96,
+	nodePair{"Wałcz", "Warszawa"}:   421,
+	nodePair{"Poznań", "Warszawa"}:  310,
 }
 
 var nbs = map[Node][]Node{}
