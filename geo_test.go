@@ -12,11 +12,13 @@ import (
 
 func ExampleGeo() {
 	g := Geo{}
+	fmt.Println(Astar(g, "Wałcz", ""))
 	fmt.Println(Astar(g, "Wałcz", "Wałcz"))
 	fmt.Println(Astar(g, "Wałcz", "Warszawa"))
 	fmt.Println(Astar(g, "Warszawa", "Wałcz"))
 	fmt.Println(Astar(g, "Wałcz", "Poznań"))
 	// Output:
+	// []
 	// []
 	// [Warszawa]
 	// [Wałcz]
