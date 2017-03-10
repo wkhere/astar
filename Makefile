@@ -5,7 +5,7 @@ go:
 	go test -cover	./...
 	go install		./...
 
-cover:
+coverage:
 	go test -coverprofile=cov
 	go tool cover -html=cov
 
