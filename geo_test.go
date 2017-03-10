@@ -10,13 +10,12 @@ import (
 // TODO:
 // need more dense graph to test & benchmark non-trivial paths
 
-func ExampleGeo() {
-	g := Geo{}
-	fmt.Println(Astar(g, "Wałcz", ""))
-	fmt.Println(Astar(g, "Wałcz", "Wałcz"))
-	fmt.Println(Astar(g, "Wałcz", "Warszawa"))
-	fmt.Println(Astar(g, "Warszawa", "Wałcz"))
-	fmt.Println(Astar(g, "Wałcz", "Poznań"))
+func ExampleL() {
+	fmt.Println(Astar(L("Wałcz"), L("")))
+	fmt.Println(Astar(L("Wałcz"), L("Wałcz")))
+	fmt.Println(Astar(L("Wałcz"), L("Warszawa")))
+	fmt.Println(Astar(L("Warszawa"), L("Wałcz")))
+	fmt.Println(Astar(L("Wałcz"), L("Poznań")))
 	// Output:
 	// []
 	// []
@@ -26,33 +25,33 @@ func ExampleGeo() {
 }
 
 func BenchmarkGeo(b *testing.B) {
-	g := Geo{}
 	for n := 0; n < b.N; n++ {
-		Astar(g, "Wałcz", "Wałcz")
-		Astar(g, "Wałcz", "Warszawa")
-		Astar(g, "Wałcz", "Poznań")
+		Astar(L("Wałcz"), L("Wałcz"))
+		Astar(L("Wałcz"), L("Warszawa"))
+		Astar(L("Wałcz"), L("Poznań"))
 	}
 }
 
-type Geo struct{}
+type L string // Location
 
-func (g Geo) Nbs(node Node) []Node {
-	return nbs[node]
+func (l1 L) Nbs() []Node {
+	return nbs[l1]
 }
 
-func (g Geo) Dist(n1, n2 Node) (v Cost) {
-	v, ok := distLookup(n1, n2)
+func (l1 L) DistanceTo(n2 Node) (v Cost) {
+	l2 := n2.(L)
+	v, ok := distLookup(l1, l2)
 	if !ok {
-		panic(fmt.Sprintf("no dist for %v,%v", n1, n2))
+		panic(fmt.Sprintf("no dist for %v,%v", l1, l2))
 	}
 	return
 }
 
-func (g Geo) H(n1, n2 Node) Cost {
-	return Cost(geo.H(coords[n1], coords[n2]))
+func (l1 L) EstimateTo(n2 Node) Cost {
+	return Cost(geo.H(coords[l1], coords[n2.(L)]))
 }
 
-var coords = map[Node]geo.Pt{
+var coords = map[L]geo.Pt{
 	"Wałcz":     {53.283853, 16.470173},
 	"Trzcianka": {53.0427712, 16.3763841},
 	"Piła":      {53.1347933, 16.6195561},
@@ -60,9 +59,9 @@ var coords = map[Node]geo.Pt{
 	"Warszawa":  {52.230069, 21.018513},
 }
 
-type nodePair struct{ n1, n2 Node }
+type locationPair struct{ l1, l2 L }
 
-var distances = map[nodePair]Cost{
+var distances = map[locationPair]Cost{
 	// these are arbitrary distances taken from real maps
 	{"Wałcz", "Trzcianka"}:  31,
 	{"Trzcianka", "Poznań"}: 88,
@@ -76,16 +75,16 @@ var nbs = map[Node][]Node{}
 
 func init() {
 	for k := range distances {
-		nbs[k.n1] = append(nbs[k.n1], k.n2)
-		nbs[k.n2] = append(nbs[k.n2], k.n1)
+		nbs[k.l1] = append(nbs[k.l1], k.l2)
+		nbs[k.l2] = append(nbs[k.l2], k.l1)
 	}
 }
 
-func distLookup(n1, n2 Node) (v Cost, ok bool) {
-	v, ok = distances[nodePair{n1, n2}]
+func distLookup(l1, l2 L) (v Cost, ok bool) {
+	v, ok = distances[locationPair{l1, l2}]
 	if ok {
 		return
 	}
-	v, ok = distances[nodePair{n2, n1}]
+	v, ok = distances[locationPair{l2, l1}]
 	return
 }

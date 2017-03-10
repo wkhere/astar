@@ -1,19 +1,18 @@
 package astar
 
 type Cost int
-type Node interface{}
 
-type Graph interface {
-	Nbs(Node) []Node
-	Dist(n1, n2 Node) Cost
-	H(n1, n2 Node) Cost
+type Node interface {
+	Nbs() []Node
+	DistanceTo(other Node) Cost
+	EstimateTo(other Node) Cost
 }
 
-func Astar(graph Graph, node0, goal Node) (path []Node) {
+func Astar(node0, goal Node) (path []Node) {
 	closedset := map[Node]struct{}{}
 	parents := map[Node]Node{}
 	g := map[Node]Cost{node0: 0}
-	f0 := graph.H(node0, goal)
+	f0 := node0.EstimateTo(goal)
 	openq := new(OpenQS)
 	openq.Init()
 	openq.Add(node0, f0)
@@ -27,12 +26,12 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 
 		closedset[x] = struct{}{}
 
-		for _, y := range graph.Nbs(x) {
+		for _, y := range x.Nbs() {
 			if _, closed := closedset[y]; closed {
 				continue
 			}
 
-			gEstimated := g[x] + graph.Dist(x, y)
+			gEstimated := g[x] + x.DistanceTo(y)
 
 			yQueued, updating := openq.Item(y)
 
@@ -44,7 +43,7 @@ func Astar(graph Graph, node0, goal Node) (path []Node) {
 
 			parents[y] = x
 			g[y] = gEstimated
-			fy := graph.H(y, goal) + gEstimated
+			fy := gEstimated + y.EstimateTo(goal)
 
 			if updating {
 				openq.Update(yQueued, fy)
