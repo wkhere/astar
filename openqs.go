@@ -63,8 +63,8 @@ func (qs *OpenQS) Add(v Node, priority Cost) {
 
 func (qs *OpenQS) Update(x *qitem, newPriority Cost) {
 	qs.tcounter++
-	x.priority = newPriority
 	x.t = qs.tcounter
+	x.priority = newPriority
 	heap.Fix(&qs.q, x.index)
 }
 
