@@ -4,7 +4,7 @@ go:
 	go install      ./...
 
 coverage:
-	go test -coverprofile=cov
+	go test -coverprofile=cov ./...
 	go tool cover -html=cov
 
 benchmark:
