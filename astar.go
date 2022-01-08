@@ -13,7 +13,7 @@ func Astar(node0, goal Node) (path []Node) {
 	parents := map[Node]Node{}
 	g := map[Node]Cost{node0: 0}
 	f0 := node0.EstimateTo(goal)
-	openq := new(OpenQS)
+	openq := new(QMap)
 	openq.Init()
 	openq.Add(node0, f0)
 
@@ -33,7 +33,7 @@ func Astar(node0, goal Node) (path []Node) {
 
 			gEstimated := g[x] + x.DistanceTo(y)
 
-			yQueued, updating := openq.Item(y)
+			yQueued, updating := openq.Get(y)
 
 			if updating {
 				if gEstimated >= g[y] {
