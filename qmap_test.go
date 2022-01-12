@@ -18,7 +18,7 @@ func qmapExample() []Node {
 	q.Add(node("foo"), 10)
 	q.Add(node("five"), 5)
 	q.Add(node("five2"), 5)
-	item, _ := q.Item(node("foo"))
+	item, _ := q.Get(node("foo"))
 	q.Update(item, 3)
 	q.Add(node("two"), 2)
 	res := make([]Node, 0, 4)
