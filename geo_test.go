@@ -7,6 +7,8 @@ import (
 	"github.com/wkhere/astar/graphs/geo"
 )
 
+var Point = geo.Point
+
 // TODO:
 // need more dense graph to test & benchmark non-trivial paths
 
@@ -52,11 +54,11 @@ func (l1 L) EstimateTo(n2 Node) Cost {
 }
 
 var coords = map[L]geo.Pt{
-	"Wałcz":     {53.283853, 16.470173},
-	"Trzcianka": {53.0427712, 16.3763841},
-	"Piła":      {53.1347933, 16.6195561},
-	"Poznań":    {52.408031, 16.920613},
-	"Warszawa":  {52.230069, 21.018513},
+	"Wałcz":     Point(53.283853, 16.470173),
+	"Trzcianka": Point(53.0427712, 16.3763841),
+	"Piła":      Point(53.1347933, 16.6195561),
+	"Poznań":    Point(52.408031, 16.920613),
+	"Warszawa":  Point(52.230069, 21.018513),
 }
 
 type locationPair struct{ l1, l2 L }
