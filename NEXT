@@ -1,0 +1,2 @@
+- hide qmap api
+- use generics where possible, eg. for Cost
