@@ -58,12 +58,11 @@ func Astar(node0, goal Node) (path []Node) {
 func consPath(node Node, parents map[Node]Node, path *[]Node) {
 	for {
 		parent, ok := parents[node]
-		if ok {
-			*path = append(*path, node)
-			node = parent
-		} else {
+		if !ok {
 			break
 		}
+		*path = append(*path, node)
+		node = parent
 	}
 	reverse(*path)
 }
