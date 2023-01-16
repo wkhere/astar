@@ -9,11 +9,13 @@ type Node interface {
 }
 
 func Astar(node0, goal Node) (path []Node) {
-	closedset := map[Node]struct{}{}
-	parents := map[Node]Node{}
-	g := map[Node]Cost{node0: 0}
-	f0 := node0.EstimateTo(goal)
-	openq := new(QMap)
+	var (
+		closedset = map[Node]struct{}{}
+		parents   = map[Node]Node{}
+		g         = map[Node]Cost{node0: 0}
+		f0        = node0.EstimateTo(goal)
+		openq     = new(QMap)
+	)
 	openq.Init()
 	openq.Add(node0, f0)
 
