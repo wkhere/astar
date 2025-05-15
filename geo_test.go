@@ -30,11 +30,18 @@ func ExampleL() {
 	// [Katowice Leszno Poznań Trzcianka Wałcz]
 }
 
-func BenchmarkGeo(b *testing.B) {
+func BenchmarkGeoOld(b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		Astar(L("Wałcz"), L("Wałcz"))
 		Astar(L("Wałcz"), L("Warszawa"))
 		Astar(L("Wałcz"), L("Poznań"))
+	}
+}
+func BenchmarkGeoNew(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Astar(L("Wałcz"), L("Wałcz"))
+		Astar(L("Wałcz"), L("Warszawa"))
+		Astar(L("Wałcz"), L("Cieszyn"))
 	}
 }
 
