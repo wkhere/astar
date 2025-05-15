@@ -18,12 +18,16 @@ func ExampleL() {
 	fmt.Println(Astar(L("Wałcz"), L("Warszawa")))
 	fmt.Println(Astar(L("Warszawa"), L("Wałcz")))
 	fmt.Println(Astar(L("Wałcz"), L("Poznań")))
+	fmt.Println(Astar(L("Wałcz"), L("Cieszyn")))
+	fmt.Println(Astar(L("Cieszyn"), L("Wałcz")))
 	// Output:
 	// []
 	// []
 	// [Warszawa]
 	// [Wałcz]
 	// [Trzcianka Poznań]
+	// [Trzcianka Poznań Leszno Katowice Cieszyn]
+	// [Katowice Leszno Poznań Trzcianka Wałcz]
 }
 
 func BenchmarkGeo(b *testing.B) {
@@ -54,23 +58,30 @@ func (l1 L) EstimateTo(n2 Node) Cost {
 }
 
 var coords = map[L]geo.Pt{
+	"Cieszyn":   Point(49.75, 63.19),
+	"Leszno":    Point(51.8454, 16.5748),
 	"Wałcz":     Point(53.283853, 16.470173),
 	"Trzcianka": Point(53.0427712, 16.3763841),
 	"Piła":      Point(53.1347933, 16.6195561),
 	"Poznań":    Point(52.408031, 16.920613),
 	"Warszawa":  Point(52.230069, 21.018513),
+	"Katowice":  Point(50.26, 19.02),
 }
 
 type locationPair struct{ l1, l2 L }
 
 var distances = map[locationPair]Cost{
 	// these are arbitrary distances taken from real maps
-	{"Wałcz", "Trzcianka"}:  31,
-	{"Trzcianka", "Poznań"}: 88,
-	{"Wałcz", "Piła"}:       28,
-	{"Piła", "Poznań"}:      96,
-	{"Wałcz", "Warszawa"}:   421,
-	{"Poznań", "Warszawa"}:  310,
+	{"Wałcz", "Trzcianka"}:   31,
+	{"Trzcianka", "Poznań"}:  88,
+	{"Wałcz", "Piła"}:        28,
+	{"Piła", "Poznań"}:       96,
+	{"Wałcz", "Warszawa"}:    421,
+	{"Poznań", "Warszawa"}:   310,
+	{"Cieszyn", "Katowice"}:  74,
+	{"Poznań", "Leszno"}:     81,
+	{"Leszno", "Katowice"}:   298,
+	{"Warszawa", "Katowice"}: 295,
 }
 
 var nbs = map[Node][]Node{}
