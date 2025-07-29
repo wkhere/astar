@@ -1,11 +1,11 @@
 package geo
 
 type Pt struct {
-	Lat, Lon float64
+	Lat, Lng float64
 }
 
-func Point(lat, lon float64) Pt {
-	return Pt{lat, lon}
+func Point(lat, lng float64) Pt {
+	return Pt{lat, lng}
 }
 
 func AbsDeg(deg, min, sec float64) float64 {
