@@ -65,7 +65,7 @@ func (l1 L) EstimateTo(n2 Node) Cost {
 }
 
 var coords = map[L]geo.Pt{
-	"Cieszyn":   Point(49.75, 63.19),
+	"Cieszyn":   Point(49.748, 18.65565),
 	"Leszno":    Point(51.8454, 16.5748),
 	"Wałcz":     Point(53.283853, 16.470173),
 	"Trzcianka": Point(53.0427712, 16.3763841),
