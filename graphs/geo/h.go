@@ -10,10 +10,10 @@ const (
 )
 
 func H(p1, p2 Pt) float64 {
-	phi1 := toRadian(p1.Lat)
-	phi2 := toRadian(p2.Lat)
-	dphi := toRadian(p2.Lat - p1.Lat)
-	dlam := toRadian(p2.Lon - p1.Lon)
+	phi1 := toRadians(p1.Lat)
+	phi2 := toRadians(p2.Lat)
+	dphi := toRadians(p2.Lat - p1.Lat)
+	dlam := toRadians(p2.Lon - p1.Lon)
 
 	sp := math.Sin(dphi / 2)
 	sl := math.Sin(dlam / 2)
@@ -22,6 +22,6 @@ func H(p1, p2 Pt) float64 {
 	return math.Floor(earthRadius * c)
 }
 
-func toRadian(angle float64) float64 {
+func toRadians(angle float64) float64 {
 	return angle * piBy180
 }
